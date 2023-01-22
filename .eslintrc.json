@@ -19,6 +19,7 @@
     "@typescript-eslint"
   ],
   "rules": {
+    "import/prefer-default-export": "off",
     "@typescript-eslint/indent": [
       "error",
       4
@@ -26,7 +27,6 @@
     "@typescript-eslint/return-await": [
       "error",
       "always"
-    ],
-    "@typescript-eslint/import/prefer-default-export": "off"
+    ]
   }
 }

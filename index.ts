@@ -7,11 +7,14 @@ dotenv.config();
 console.log(`Start static http server on the ${process.env['HTTP_SERVER_PORT']} port!`);
 httpServer.listen(process.env['HTTP_SERVER_PORT']);
 
-process.on('exit', () => {
+const cleanup = () => {
     httpServer.close();
     wsClose();
-});
-process.on('SIGINT', () => {
-    httpServer.close();
-    wsClose();
-});
+}
+
+process.on('exit', cleanup);
+process.on('SIGINT', cleanup);
+process.on('SIGHUP', cleanup);
+process.on('SIGQUIT', cleanup);
+process.on('SIGTERM', cleanup);
+process.on('uncaughtException', cleanup);

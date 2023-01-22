@@ -1,11 +1,11 @@
 import { WebSocketServer, WebSocket, createWebSocketStream } from 'ws';
-import {getHandler} from "./commands";
+import { getHandler } from './commands';
 
 const WS_PORT = parseInt(process.env['WEBSOCKET_SERVER_PORT'] as string, 10) || 8080;
 
 export const wsServer = new WebSocketServer({
     host: 'localhost',
-    port: WS_PORT
+    port: WS_PORT,
 });
 
 export const wsClose = () => {
@@ -17,7 +17,7 @@ export const wsClose = () => {
 };
 
 wsServer.on('listening', () => {
-    console.log(`WebSocket server started: `, wsServer.address());
+    console.log('WebSocket server started: ', wsServer.address());
 });
 
 wsServer.on('connection', (client: WebSocket) => {
@@ -29,7 +29,12 @@ wsServer.on('connection', (client: WebSocket) => {
         const [commandName, ...commandArgs] = command.split(' ');
         const handler = getHandler(commandName!);
 
-        await handler(commandArgs, stream);
+        try {
+            const commandResponse = await handler(commandArgs, stream);
+            console.debug(`Command response: ${commandResponse}`);
+        } catch (error) {
+            console.error('Command failed:', error);
+        }
     });
 
     client.on('close', () => {

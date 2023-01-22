@@ -1,7 +1,9 @@
-import { Button, mouse, right, down, left, up } from '@nut-tree/nut-js';
-import { CommandHandler } from "./command_handler";
+import {
+    Button, mouse, right, down, left, up,
+} from '@nut-tree/nut-js';
+import { CommandHandler } from './commandHandler';
 
-export const draw_rectangle: CommandHandler = async (args: string[]) => {
+export const drawRectangle: CommandHandler = async (args: string[]): Promise<string> => {
     mouse.config.mouseSpeed = 500;
 
     const width = parseInt(args[0]!, 10);
@@ -15,4 +17,6 @@ export const draw_rectangle: CommandHandler = async (args: string[]) => {
     await mouse.move(up(height));
 
     await mouse.releaseButton(Button.LEFT);
-}
+
+    return `Drawn rectangle ${width} by ${height} px`;
+};

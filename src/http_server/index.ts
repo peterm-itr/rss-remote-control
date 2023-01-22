@@ -1,13 +1,16 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as http from 'http';
+import { createServer, IncomingMessage, ServerResponse } from 'http';
 import ErrnoException = NodeJS.ErrnoException;
 
-export const httpServer = http.createServer(function (req: http.IncomingMessage, res: http.ServerResponse) {
-    const __dirname = path.resolve(path.dirname(''));
-    const file_path = __dirname + (req.url === '/' ? '/front/index.html' : '/front' + req.url);
+export const httpServer = createServer((req: IncomingMessage, res: ServerResponse) => {
+    const currentDirectory = path.resolve(path.dirname(''));
+    const requestedFilePath = path.join(
+        currentDirectory,
+        (req.url === '/' ? '/front/index.html' : `/front${req.url}`),
+    );
 
-    fs.readFile(file_path, function (err: ErrnoException | null, data: Buffer) {
+    fs.readFile(requestedFilePath, (err: ErrnoException | null, data: Buffer) => {
         if (err) {
             res.writeHead(404);
             res.end(JSON.stringify(err));

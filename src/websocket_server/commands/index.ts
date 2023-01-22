@@ -1,25 +1,27 @@
-import { CommandHandler } from './command_handler';
-import { mouse_up } from './mouse_up';
-import { mouse_right } from './mouse_right';
-import { mouse_down } from './mouse_down';
-import { mouse_left } from './mouse_left';
-import { mouse_position } from './mouse_position';
-import { draw_circle } from './draw_circle';
-import { draw_square } from './draw_square';
-import { draw_rectangle } from './draw_rectangle';
+import { CommandHandler } from './commandHandler';
+import { mouseUp } from './mouseUp';
+import { mouseRight } from './mouseRight';
+import { mouseDown } from './mouseDown';
+import { mouseLeft } from './mouseLeft';
+import { mousePosition } from './mousePosition';
+import { drawCircle } from './drawCircle';
+import { drawSquare } from './drawSquare';
+import { drawRectangle } from './drawRectangle';
+import { printScreen } from './printScreen';
 
 const noop: CommandHandler = async () => {};
 
 export const getHandler = (commandName: string): CommandHandler => {
     switch (commandName) {
-        case 'mouse_up': return mouse_up;
-        case 'mouse_right': return mouse_right;
-        case 'mouse_down': return mouse_down;
-        case 'mouse_left': return mouse_left;
-        case 'mouse_position': return mouse_position;
-        case 'draw_circle': return draw_circle;
-        case 'draw_square': return draw_square;
-        case 'draw_rectangle': return draw_rectangle;
+        case 'mouse_up': return mouseUp;
+        case 'mouse_right': return mouseRight;
+        case 'mouse_down': return mouseDown;
+        case 'mouse_left': return mouseLeft;
+        case 'mouse_position': return mousePosition;
+        case 'draw_circle': return drawCircle;
+        case 'draw_square': return drawSquare;
+        case 'draw_rectangle': return drawRectangle;
+        case 'prnt_scrn': return printScreen;
         default: return noop;
     }
-}
+};

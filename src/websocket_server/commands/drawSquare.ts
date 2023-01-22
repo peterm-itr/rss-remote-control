@@ -1,7 +1,9 @@
-import { Button, mouse, right, down, left, up } from '@nut-tree/nut-js';
-import { CommandHandler } from "./command_handler";
+import {
+    Button, mouse, right, down, left, up,
+} from '@nut-tree/nut-js';
+import { CommandHandler } from './commandHandler';
 
-export const draw_square: CommandHandler = async (args: string[]) => {
+export const drawSquare: CommandHandler = async (args: string[]): Promise<string> => {
     mouse.config.mouseSpeed = 1000;
 
     const width = parseInt(args[0]!, 10);
@@ -15,4 +17,5 @@ export const draw_square: CommandHandler = async (args: string[]) => {
 
     await mouse.releaseButton(Button.LEFT);
 
-}
+    return `Drawn a square ${width} by ${width} px`;
+};
