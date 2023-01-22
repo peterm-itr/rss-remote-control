@@ -1,4 +1,5 @@
 import { WebSocketServer, WebSocket, createWebSocketStream } from 'ws';
+import {getHandler} from "./commands";
 
 const WS_PORT = parseInt(process.env['WEBSOCKET_SERVER_PORT'] as string, 10) || 8080;
 
@@ -24,6 +25,11 @@ wsServer.on('connection', (client: WebSocket) => {
 
     stream.on('data', async (command: string) => {
         console.debug(`Received command: ${command}`);
+
+        const [commandName, ...commandArgs] = command.split(' ');
+        const handler = getHandler(commandName!);
+
+        await handler(commandArgs, stream);
     });
 
     client.on('close', () => {
