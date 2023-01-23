@@ -1,11 +1,13 @@
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
     target: 'node',
     mode: 'production',
     devtool: 'inline-source-map',
+    externals: [nodeExternals()],
     entry: {
-        main: './src/index.ts',
+        main: './index.ts',
     },
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -20,10 +22,10 @@ module.exports = {
             {
                 test: /\.tsx?$/,
                 loader: 'ts-loader',
-                include: [path.resolve(__dirname, './src')],
+                include: [__dirname],
                 exclude: [
-                    '/node_modules/',
-                    '/dist/',
+                    path.resolve(__dirname, './node_modules'),
+                    path.resolve(__dirname, './dist'),
                 ]
             },
         ],

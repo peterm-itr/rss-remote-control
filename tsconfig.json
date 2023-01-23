@@ -27,10 +27,10 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   "include": [
+    "./*.ts",
     "./**/*.ts"
   ],
   "exclude": [
-    "./front",
     "./node_modules",
     "./dist"
   ],
